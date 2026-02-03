@@ -1,0 +1,9 @@
+data/
+*.sqlite3
+*.db
+*.csv
+*.zip
+
+.ipynb_checkpoints/
+
+kilter_env/
