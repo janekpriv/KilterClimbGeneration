@@ -27,6 +27,10 @@ class KilterDataSet(Dataset):
         climbs.frames
         FROM climbs
         WHERE climbs.layout_id = 1
+          AND climbs.frames IS NOT NULL 
+          AND climbs.frames NOT LIKE '%x%'
+          AND climbs.frames NOT LIKE '%,%'
+          AND climbs.frames NOT LIKE '%"%'
         """
 
         self.cursor.execute(query)
@@ -46,10 +50,11 @@ class KilterDataSet(Dataset):
         173 height
         """
         
-        tensor = torch.zeros((4, 185, 173), dtype=torch.float32)
+        tensor = torch.zeros((4, 173, 185), dtype=torch.float32)
+
+
 
         holds = frame.split('p')
-        print(holds)
         for hold in holds:
             if not hold: continue
             if "r" not in hold: continue
