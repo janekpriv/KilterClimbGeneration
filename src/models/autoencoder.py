@@ -57,32 +57,40 @@ class KilterDecoder(nn.Module):
     def __init__(self, latent_dim=128):
         super(KilterDecoder, self).__init__()
         
-
         self.flattened_size = 256 * 10 * 11
         
-
+        
         self.fc = nn.Linear(latent_dim, self.flattened_size)
         
-
+    
         self.decoder_cnn = nn.Sequential(
 
+           
             nn.Unflatten(1, (256, 10, 11)),
 
-            nn.ConvTranspose2d(in_channels=256, out_channels=128, kernel_size=4, stride=2, padding=1),
+            
+            nn.Upsample(size=(21, 23), mode='nearest'),
+            nn.Conv2d(in_channels=256, out_channels=128, kernel_size=3, padding=1),
             nn.ReLU(),
             
-
-            nn.ConvTranspose2d(in_channels=128, out_channels=64, kernel_size=4, stride=2, padding=1),
+            
+            nn.Upsample(size=(43, 46), mode='nearest'),
+            nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3, padding=1),
             nn.ReLU(),
             
-            nn.ConvTranspose2d(in_channels=64, out_channels=32, kernel_size=4, stride=2, padding=1),
+            
+            nn.Upsample(size=(86, 92), mode='nearest'),
+            nn.Conv2d(in_channels=64, out_channels=32, kernel_size=3, padding=1),
             nn.ReLU(),
             
-            nn.ConvTranspose2d(in_channels=32, out_channels=4, kernel_size=4, stride=2, padding=1),
+            
+            nn.Upsample(size=(173, 185), mode='nearest'),
+            nn.Conv2d(in_channels=32, out_channels=4, kernel_size=3, padding=1),
             
             
             nn.Sigmoid() 
         )
+
 
     def forward(self, x):
        
