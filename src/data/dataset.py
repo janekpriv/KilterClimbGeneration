@@ -31,6 +31,7 @@ class KilterDataSet(Dataset):
           AND climbs.frames NOT LIKE '%x%'
           AND climbs.frames NOT LIKE '%,%'
           AND climbs.frames NOT LIKE '%"%'
+          LIMIT 10000;
         """
 
         self.cursor.execute(query)

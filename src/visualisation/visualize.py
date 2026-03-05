@@ -25,7 +25,7 @@ def main():
     batch = next(iter(test_loader)) 
     single_route = batch[0].unsqueeze(0).to(device)
 
-    print(torch.nonzero(single_route, as_tuple=False))
+    #print(torch.nonzero(single_route, as_tuple=False))
 
     with torch.no_grad():
         reconstructed_route, _ = model(single_route)
@@ -33,13 +33,21 @@ def main():
     orig_tensor = single_route.squeeze().cpu()
     recon_tensor = reconstructed_route.squeeze().cpu()   
 
-    recon_tensor = torch.where(recon_tensor > 0.8, recon_tensor, torch.tensor(0.0))
+    #recon_tensor = torch.where(recon_tensor > 0.8, recon_tensor, torch.tensor(0.0))
 
-    print(torch.nonzero(recon_tensor, as_tuple=False))
+    recon_tensor = (recon_tensor > 0.7).float()
+
+    threshold = 0.7
+    clean_recon = (recon_tensor > threshold).float()
+
+    print(len(torch.nonzero(recon_tensor, as_tuple=False)))
  
 
     img_original = orig_tensor.sum(dim=0).numpy()
-    img_reconstructed = recon_tensor.sum(dim=0).numpy()
+    img_reconstructed = clean_recon.sum(dim=0).numpy()
+
+    diff_tensor = img_original - img_reconstructed  
+
 
     fig, axes = plt.subplots(1, 2, figsize=(12,6))
 
