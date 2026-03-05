@@ -9,7 +9,7 @@ from data.dataset import get_data_loaders
 from models.autoencoder import KilterAE
 
 
-def focal_loss(preds, targets, alpha_pos=200.0, alpha_neg=1.0, gamma=2.0):
+def focal_loss(preds, targets, alpha_pos=50.0, alpha_neg=1.0, gamma=2.0):
 
     preds = torch.clamp(preds, min=1e-7, max=1-1e-7)
     
@@ -32,7 +32,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
     print(device)
     real_routes = enumerate(val_data_loader)
-    model = KilterAE(latent_dim=128).to(device)
+    model = KilterAE(latent_dim=256).to(device)
 
     criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0005)
