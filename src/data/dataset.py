@@ -17,16 +17,22 @@ class KilterDataSet(Dataset):
         return(len(self.frames))
 
     def __getitem__(self, idx):
-        frame = self.frames[idx]
-        tensor = self.create_tensor(frame)
-        return tensor
+        frame = self.frames[idx][0]
+        grade = self.frames[idx][1]
+
+        grade_tensor = torch.tensor([grade], dtype=torch.float32)
+        route_tensor = self.create_tensor(frame)
+        return route_tensor, grade_tensor
 
     def get_frames(self):
         query="""
         SELECT 
-        climbs.frames
+        climbs.frames,
+        climb_stats.difficulty_average
         FROM climbs
-        WHERE climbs.layout_id = 1
+        JOIN climb_stats ON climb_stats.climb_uuid = climbs.uuid
+        WHERE climb_stats.angle = 40    
+          AND climbs.layout_id = 1
           AND climbs.frames IS NOT NULL 
           AND climbs.frames NOT LIKE '%x%'
           AND climbs.frames NOT LIKE '%,%'
@@ -39,7 +45,7 @@ class KilterDataSet(Dataset):
 
         frames_list = []
         for x in range(len(result)):
-            frames_list.append(result[x][0])
+            frames_list.append((result[x][0], result[x][1]))
 
         return frames_list
 
