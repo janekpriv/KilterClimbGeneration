@@ -49,7 +49,7 @@ def main():
         model.train()
         train_loss=0.0
         
-        for idx, real_routes in enumerate(training_data_loader):
+        for idx, (real_routes, grades) in enumerate(training_data_loader):
             optimizer.zero_grad()
 
 
@@ -69,7 +69,7 @@ def main():
         model.eval()
         val_loss = 0.0
         with torch.no_grad():
-            for test_routes in val_data_loader:
+            for test_routes, _ in val_data_loader:
                 
                 test_routes = test_routes.to(torch.float32).to(device)
                 
