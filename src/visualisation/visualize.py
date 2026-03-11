@@ -22,7 +22,7 @@ def main():
 
     _, test_loader = get_data_loaders(db_path, batch_size=32)
 
-    batch = next(iter(test_loader)) 
+    batch, _ = next(iter(test_loader)) 
     single_route = batch[0].unsqueeze(0).to(device)
 
     #print(torch.nonzero(single_route, as_tuple=False))
