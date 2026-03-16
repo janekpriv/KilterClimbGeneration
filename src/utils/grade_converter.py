@@ -1,27 +1,31 @@
 import sqlite3
 
+class Grade_converter:
 
-db_path = r'../../data/raw/db.sqlite3'
+    def __init__(self):
+        self.db_path = r'../../data/raw/db.sqlite3'
+        
 
-def get_grade_dictionary():
 
-    conn = sqlite3.connect(str(db_path))
-    cursor = conn.cursor()
+    def get_grade_dictionary(self):
 
-   
-    query = """
-    SELECT
-        difficulty, 
-        boulder_name
-    FROM difficulty_grades
-    """
+        conn = sqlite3.connect(str(self.db_path))
+        cursor = conn.cursor()
 
-    cursor.execute(query)
-    result = cursor.fetchall()
+    
+        query = """
+        SELECT
+            difficulty, 
+            boulder_name
+        FROM difficulty_grades
+        """
 
-    grade_dict = {}
+        cursor.execute(query)
+        result = cursor.fetchall()
 
-    for x in range(len(result)):
-        grade_dict[str(result[x][0])] = result[x][1].split("/")[1]
+        grade_dict = {}
 
-    return grade_dict
+        for x in range(len(result)):
+            grade_dict[(result[x][0])] = result[x][1].split("/")[1]
+
+        return grade_dict
