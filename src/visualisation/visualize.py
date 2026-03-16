@@ -43,8 +43,8 @@ def main():
         reconstructed_route, _ = model(single_route)
         predicted_grade = predictor_model(single_route).item()
 
-    v_real_grade = grades[math.floor(real_grade)]
-    v_predicted_grade = grades[math.floor(predicted_grade)]
+    v_real_grade = grades[math.round(real_grade)]
+    v_predicted_grade = grades[math.round(predicted_grade)]
 
     orig_tensor = single_route.squeeze().cpu()
     recon_tensor = reconstructed_route.squeeze().cpu()   
