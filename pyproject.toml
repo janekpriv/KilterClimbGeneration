@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "kilter-project"
 version = "0.1.0"
-description = "Deep Learning pipeline for Kilter Board climbing routes"
+
 authors = [
-    {name = "Twój Nick", email = "twoj@email.com"}
+    {name = "Janekpriv", email = "janekpriv@gmail.com"}
 ]
 requires-python = ">=3.8"
 
