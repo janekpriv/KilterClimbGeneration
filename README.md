@@ -53,6 +53,12 @@ Run the visualization script to randomly sample a route, reconstruct it, and out
 ```bash
   python src/scripts/visualize.py
 ```
+### 4. Download Pre-trained Models
+The repository does not contain the heavy `.pth` weight files. To run the predictions immediately:
+1. Go to the [Releases](../../releases) tab of this repository.
+2. Download `kilter_ae_weights.pth` and `kilter_predictor_weights.pth`.
+3. Place both files inside the `models/` directory.
+
 ### 🔮 Future Scope
 - Route Generation: Sampling the 128-d latent space to procedurally generate novel boulder problems.
 - Interactive UI: A web-based interface for real-time grade evaluation of custom-built routes.
